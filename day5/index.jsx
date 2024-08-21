@@ -1,53 +1,62 @@
-const express =require('express');
-const mongodb=require('mongodb')
+const express = require('express');
+const mongodb = require('mongodb')
 
-const url='mongodb://localhost:27017';
-const client=new mongodb.MongoClient(url);
-const dbName='new_database'
+const url = 'mongodb://localhost:27017';
+const client = new mongodb.MongoClient(url);
+const dbName = 'new_database'
 
 const app = express();
 
-const connect=async()=>{
+const connect = async () => {
     await client.connect();
-    const db=client.db(dbName);
+    const db = client.db(dbName);
     console.log('connected');
     return db;
 }
 
-const insertdata=async()=>{
-    const db=await connect();
-    const admins=db.collection('admins');
+const insertdata = async () => {
+    const db = await connect();
+    const admins = db.collection('admins');
 
     const response = await admins.insertOne({
-        name:'khushwant',
-        contact:7726882222,
+        name: 'khushwant',
+        contact: 7726882222,
     });
     // console.log(response);
 }
 
 // insertdata();
 
-const deleteData=async()=>{
-    const db=await connect();
-    const admins=db.collection('admins');
+const deleteData = async () => {
+    const db = await connect();
+    const admins = db.collection('admins');
 
-    const response =await admins.deleteOne({
-        name:'prateek',
+    const response = await admins.deleteOne({
+        name: 'prateek',
     });
     console.log(response);
 }
 
 // deleteData();
 
-const updateData=async()=>{
-    const db=await connect();
-    const admins=db.collection('admins');
+const updateData = async () => {
+    const db = await connect();
+    const admins = db.collection('admins');
 
-    const response=await admins.updateOne({name:'prateek'},{$set:{contact:7014174848}});
+    const response = await admins.updateOne({ name: 'prateek' }, { $set: { contact: 7014174848 } });
     console.log(response);
 }
 
+const readData = async () => {
+    const db = await connect();
+    const admins = db.collection('admins');
+
+    const response = await admins.find().toArray();
+    console.log(response);
+}
+readData();
+
 // updateData();
-app.listen(5200,()=>{
+app.listen(5200, () => {
     console.log('server is running on port 5200')
 })
