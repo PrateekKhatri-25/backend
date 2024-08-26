@@ -1,15 +1,22 @@
-const controller = (req, res) => {
+const products = require("../database/config");
+
+const controller = async(req, res) => {
     try {
         const data = req.body;
+
         const thumbnail = req.files.thumbnail[0].filename;
-        // console.log(thumbnail);
+
         if (thumbnail) data.thumbnail = thumbnail
-        // console.log(data);
+
         const images = req.files.images.map((filedetail) => filedetail.filename);
-        // console.log(images);
+
         data.images = images;
-        console.log(data);
-        res.status(200).json({ message: 'done' })
+
+        const finalData=new products(data);
+
+        const response= await finalData.save();
+        
+        res.status(200).json({ message: 'done' ,response})
     }
     catch (error) {
         console.log(error);

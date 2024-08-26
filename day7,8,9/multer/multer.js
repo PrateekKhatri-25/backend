@@ -1,14 +1,14 @@
 const multer = require('multer');
-const path=require('path');
+const path = require('path');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads')
-        
+
     },
     filename: (req, file, cb) => {
-        const extentionName=path.extname(file.originalname)
-        cb(null, Date.now()+extentionName);
+        const extentionName = path.extname(file.originalname)
+        cb(null, Date.now() + Math.floor(Math.random() * 10000) + extentionName);
         console.log(file);
     }
 })
@@ -18,4 +18,4 @@ const fileUpload = multer({ storage: storage }).fields([
     { name: 'thumbnail', maxCount: 1 }
 ]);
 
-module.exports=fileUpload
+module.exports = fileUpload
