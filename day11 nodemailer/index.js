@@ -11,7 +11,7 @@ const sendMial= async()=>{
     });
     transporter.sendMail({
         from:process.env.USERMAIL,
-        to:'yashodakhatri30@gmail.com',
+        to:'pkprateekkhatri@gmail.com',
         subject:'this is welcome mail',
         html:`
         <!DOCTYPE html>
